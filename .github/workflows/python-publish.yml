@@ -1,0 +1,48 @@
+users = {}
+
+def create_account(name, account_number, balance=0):
+  """Creates a new account with the given details"""
+  if account_number in users:
+    print("Account already exists!")
+    return
+  users[account_number] = {"name": name, "balance": balance}
+  print(f"Account created successfully! Account number: {account_number}")
+
+def login(account_number):
+  """Logs into an account if the number exists"""
+  if account_number in users:
+    return users[account_number]
+  else:
+    print("Invalid account number!")
+    return None
+
+def deposit(account_number, amount):
+  """Deposits the given amount to the specified account"""
+  account = login(account_number)
+  if account:
+    account["balance"] += amount
+    print(f"Amount ${amount} deposited successfully!")
+  else:
+    print("Invalid account number!")
+
+def withdraw(account_number, amount):
+  """Withdraws the given amount from the specified account"""
+  account = login(account_number)
+  if account:
+    if account["balance"] >= amount:
+      account["balance"] -= amount
+      print(f"Amount ${amount} withdrawn successfully!")
+    else:
+      print("Insufficient funds!")
+  else:
+    print("Invalid account number!")
+
+# Sample usage
+create_account("John Doe", 123456)
+create_account("Jane Doe", 654321)
+
+deposit(123456, 100)
+withdraw(654321, 50)
+
+print(f"John Doe's balance: ${users[123456]['balance']}")
+print(f"Jane Doe's balance: ${users[654321]['balance']}")
